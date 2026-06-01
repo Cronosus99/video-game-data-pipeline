@@ -6,18 +6,24 @@
 
 ## Project Summary
 
-This project builds an end-to-end data pipeline that integrates video game data from three different source types: a flat file, a scraped website, and a public API. Each source is cleaned and transformed independently, then merged into a single relational database and explored through visualizations. The focus of this project is data acquisition, wrangling, and integration rather than predictive modeling.
+This project analyzes trends in the video game industry by integrating data from three different source types: a flat file, a public API, and a scraped website. It explores factors such as sales, performance, awards, and ratings to uncover insights about the global video game market. Each source is cleaned and transformed independently, then merged into a single relational database and explored through visualizations. The focus of this project is data acquisition, wrangling, and integration rather than predictive modeling.
 
 ## Project Type
 Data Engineering | Data Wrangling | Multi-Source Integration
 
 ## Data Sources
 
-This project combines three distinct source types, related through video game titles:
+This project combines three distinct source types, related through common keys such as game name, genre, platform, and publisher:
 
-- **Flat file (CSV):** A Kaggle video game dataset containing sales and metadata
-- **Website (web scraping):** A Wikipedia page listing Game of the Year awards, parsed directly from the saved HTML using BeautifulSoup
-- **API:** The RAWG Video Games API, queried with pagination to retrieve game metadata
+- **Flat file (CSV) – Kaggle:** Global video game sales and performance data from 1980 to 2016.  
+  https://www.kaggle.com/datasets/modiash/video-game-sales-and-performance-data
+- **API – RAWG.io:** Comprehensive video game metadata including descriptions, ratings, playtime, genres, and platforms.  
+  https://rawg.io/apidocs
+- **Website – Wikipedia:** Lists of Game of the Year awards given to games across different regions and criteria, parsed directly from the saved HTML using BeautifulSoup.  
+  https://en.wikipedia.org/wiki/List_of_Game_of_the_Year_awards
+
+### Relationships
+The three sources are linked through shared attributes (game name, genre, platform, publisher), enabling analysis of how sales and performance relate to awards and critical reception, trends across genres and platforms over time, and patterns in ratings, playtime, and global popularity.
 
 ## Methods
 
@@ -90,5 +96,6 @@ All data sources are publicly available and used for educational purposes. Web s
 
 ## References
 
+- Modiash. (2024). *Video Game Sales and Performance Data* [Data set]. Kaggle. https://www.kaggle.com/datasets/modiash/video-game-sales-and-performance-data
 - RAWG. (2024). *RAWG Video Games Database API.* https://rawg.io/apidocs
 - Wikipedia. (2024). *List of Game of the Year awards.* https://en.wikipedia.org/wiki/List_of_Game_of_the_Year_awards
