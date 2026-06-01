@@ -1,170 +1,88 @@
-# DSC540 Final Project Repo
-2025 Fall Term Project for Bellevue University's 540 Data Preparation Course
-## Milestone 1: Identify Datasets
-The first milestone of this project will be to select the data you want to work with. You will need to select 3 different data sources that have different file types of information – and the data will need to have a relationship between them. If one doesn’t exist, you will have to create one. It is likely you will need to manipulate the data to create a relationship. Finding the data, you want to work with for this project, will likely be the hardest part of the project. You must have one of each of the following types of datasets – and you need a minimum of 1000 rows across all datasets. You need a total of 30 columns across the 3 datasets you select, meaning one dataset can have 5 columns, another can have 10 and the final could have 15. A total of 1000 rows is needed across all datasets, not each. Also - you will likely not have that many rows of data at the end of the project after you transform & blend the data together.
+# Video Game Data Pipeline (Data Engineering Project)
 
-CSV/Excel/PDF or another flat file source.
-Website you want to pull data from--you will want to identify a website that has data stored in a table, similar to the screenshot below. You will not be able to export the data to CSV for this step.
+**Author:** Kevin Danh  
+**Program:** Master of Data Science – Bellevue University  
+**Course:** DSC 540: Data Preparation  
 
-Table showing the 15 most populous countries as of mid-2020. China ranks first, followed by India and the U.S. Includes population totals, percent of world population, date of data, and source (e.g., national clocks, UN projections).
+## Project Summary
 
-API you will pull data from. You will not be able to export data to CSV for this step.
+This project builds an end-to-end data pipeline that integrates video game data from three different source types: a flat file, a scraped website, and a public API. Each source is cleaned and transformed independently, then merged into a single relational database and explored through visualizations. The focus of this project is data acquisition, wrangling, and integration rather than predictive modeling.
 
-Some places you can find datasets are listed below:
+## Project Type
+Data Engineering | Data Wrangling | Multi-Source Integration
 
-    - Tableau Community
-    - Kaggle Datasets
-    - Data.Gov
-    - Science.Gov
-    - Data.Gov.UK
-    - NORC
-    - European Social Survey
-    - API List
-    - Public APIs
-    - OpenWeatherMap
+## Data Sources
 
-Wikipedia is a good source to find data that is in a table - and the structure of the HTML is usually very similar regardless of topic.
-There are no restrictions on what dataset you use.
+This project combines three distinct source types, related through video game titles:
 
-For the first milestone, you need to submit the following as a Word document:
+- **Flat file (CSV):** A Kaggle video game dataset containing sales and metadata
+- **Website (web scraping):** A Wikipedia page listing Game of the Year awards, parsed directly from the HTML using BeautifulSoup
+- **API:** The RAWG Video Games API, queried with pagination to retrieve game metadata
 
-- Project Subject Area: Describe your project in 1-2 sentences
-- Data Sources:
-    - Flat File:
-        - Description of data source
-        - Link or Flat File uploaded
-    - API:
-        - Description of data source
-        - Link
-    - Website:
-        - Description of data source
-        - Link
-    - Relationships
-        - Describe how the data from each source is connected (see example below)
-        - If there isn't an obvious relationship, explain how you will make one
-- 250-500 Words covering the following:
-    - Project approach/plan
-    - What concerns/challenges you think you will face with the data/project topic
-    - Ethical Implications of your project topic
+## Methods
 
-Submit via a Word document to the assignment link.
+### Data Extraction
+- Loaded flat file data with Pandas
+- Scraped and parsed structured HTML tables from Wikipedia with BeautifulSoup
+- Queried the RAWG API across multiple pages and flattened nested JSON responses
 
-Example of Relationships:
-- In case you are confused what is meant by a relationship between the data sources here is an example (this is a very simple example and I would expect your datasets to have more variables)
-    - CSV File: Contains a list of stores by store ID and other metadata about the stores
-    - Website: Contains a list of store locations, by location ID and store ID and the various departments each store has by department ID.
-    - API: Contains the transactions at each store – contains a transaction ID and store ID.
-    - All 3 of these data sources are related by Store ID. The CSV file has a 1 to many relationship with the Website by StoreID and has a 1 to many relationship with the API data by StoreID as well.
+### Data Cleaning & Transformation
+- Applied at least five transformation steps to each source, including:
+  - Replacing and standardizing headers
+  - Fixing data types and inconsistent casing
+  - Removing duplicates and unnecessary columns
+  - Handling missing values
+  - Reformatting nested or non-tabular fields into clean columns
 
-## Milestone 2: Cleaning/Formatting Flat Source
-Perform at least 5 data transformation and/or cleansing steps to your flat file data. The below examples are not required - they are just potential transformations you could do. If your data doesn't work for these scenarios, complete different transformations. You can do the same transformation multiple times if needed to clean your data. The goal is a clean dataset at the end of the milestone.
+### Data Integration & Storage
+- Loaded each cleaned dataset into a SQLite database as separate tables
+- Joined the tables with SQL into a unified dataset
+- Created visualizations, including charts spanning multiple joined sources
 
-Examples:
+## Key Skills Demonstrated
 
-    - Replace Headers
-    - Format data into a more readable format
-    - Identify outliers and bad data
-    - Find duplicates
-    - Fix casing or inconsistent values
-    - Conduct Fuzzy Matching
+**Data Engineering & Wrangling**
+- Multi-source data extraction (flat file, web scraping, REST API)
+- API pagination and nested JSON flattening
+- Data cleaning and standardization across heterogeneous sources
+- Relational data modeling and SQL joins
+- Database loading and querying with SQLite
 
+**Tools & Technologies**
+- Python
+- Pandas
+- NumPy
+- BeautifulSoup
+- urllib / REST API
+- SQLite (sqlite3)
+- Matplotlib / Seaborn
+- Jupyter Notebook
+- GitHub
 
-Make sure you clearly number and label each transformation step (Step #1, Step #2, etc.) in your code and describe what it is doing in 1-2 sentences.
+## Project Structure
 
-You must submit the following:
+```text
+video-game-data-pipeline/
+├── video_game_data_pipeline.ipynb     # Main pipeline notebook
+├── (source and cleaned data files)    # CSV / HTML data sources and outputs
+├── final_database.db                  # SQLite database with merged tables
+└── README.md
+```
 
-    - Jupyter Notebook File or PDF of your code with Milestone # listed.
-    - Each transformation should be labeled with description or what it is doing.
-    - Human readable dataset after all transformations should be printed at the end of your notebook.
-    - 1 paragraph of the ethical implications of data wrangling specific to your datasource and the steps you completed answering the following questions:
-        - What changes were made to the data?
-        - Are there any legal or regulatory guidelines for your data or project topic?
-        - What risks could be created based on the transformations done?
-        - Did you make any assumptions in cleaning/transforming the data?
-        - How was your data sourced/verified for credibility?
-        - Was your data acquired in an ethical way?
-        - How would you mitigate any of the ethical implications you have identified?
+## How to Run
 
-You can submit a Jupyter Notebook or a PDF of your code. If you submit a .py file you need to also include a PDF or attachment of your results.
+1. Clone this repository
+2. Install dependencies: `pip install pandas numpy beautifulsoup4 matplotlib seaborn`
+3. To re-run the API extraction, obtain a free RAWG API key from https://rawg.io/apidocs and store it locally (see note below)
+4. Open `video_game_data_pipeline.ipynb` in Jupyter and run the cells
 
-## Milestone 3 - Cleaning/Formatting Website Data:
-Perform at least 5 data transformation and/or cleansing steps to your website data. The below examples are not required - they are just potential transformations you could do. If your data doesn't work for these scenarios, complete different transformations. You can do the same transformation multiple times if needed to clean your data. The goal is a clean dataset at the end of the milestone. As a reminder - you cannot export your website data to CSV to work with it, you must do all the work directly against the HTML source.
+> **Note on the API key:** The notebook reads the RAWG API key from a local file outside the repository. The key is never stored in the notebook or committed to GitHub. To reproduce the API steps, supply your own key. The cleaned data files are included so the merge and visualization steps can be run without re-querying the API.
 
-Examples:
+## Ethical Considerations
 
-- Replace Headers
-- Format data into a more readable format
-- Identify outliers and bad data
-- Find duplicates
-- Fix casing or inconsistent values
-- Conduct Fuzzy Matching
-- Make sure you clearly number and label each transformation step (Step #1, Step #2, etc.) in your code and describe what it is doing in 1-2 sentences.
+All data sources are publicly available and used for educational purposes. Web scraping was limited to a single publicly accessible Wikipedia page, and API usage stayed within the provider's free-tier terms. No personal or sensitive data is involved. Transformations were documented at each step to keep the data lineage transparent and reproducible.
 
-You must submit the following:
+## References
 
-- Jupyter Notebook File or PDF of your code with Milestone # listed.
-- Each transformation should be labeled with description or what it is doing.
-- Human readable dataset after all transformations should be printed at the end of your notebook.
-- 1 paragraph of the ethical implications of data wrangling specific to your datasource and the steps you completed answering the following questions:
-    - What changes were made to the data?
-    - Are there any legal or regulatory guidelines for your data or project topic?
-    - What risks could be created based on the transformations done?
-    - Did you make any assumptions in cleaning/transforming the data?
-    - How was your data sourced / verified for credibility?
-    - Was your data acquired in an ethical way?
-    - How would you mitigate any of the ethical implications you have identified?
-You can submit a Jupyter Notebook or a PDF of your code. If you submit a .py file you need to also include a PDF or attachment of your results.
-
-## Milestone 4 - Connecting to an API/Pulling in the Data and Cleaning/Formatting:
-Perform at least 5 data transformation and/or cleansing steps to your API data. The below examples are not required - they are just potential transformations you could do. If your data doesn't work for these scenarios, complete different transformations. You can do the same transformation multiple times if needed to clean your data. The goal is a clean dataset at the end of the milestone. As a reminder - you cannot export your API data to CSV to work with it, you must do all the work directly against the API/JSON source.
-
-Examples:
-
-
-- Replace Headers
-- Format data into a more readable format
-- Identify outliers and bad data
-- Find duplicates
-- Fix casing or inconsistent values
-- Conduct Fuzzy Matching
-- Make sure you clearly number and label each transformation step (Step #1, Step #2, etc.) in your code and describe what it is doing in 1-2 sentences.
-
-
-You must submit the following:
-
-- Jupyter Notebook File or PDF of your code with Milestone # listed.
-- Each transformation should be labeled with description or what it is doing.
-- Human readable dataset after all transformations should be printed at the end of your notebook.
-- 1 paragraph of the ethical implications of data wrangling specific to your datasource and the steps you completed answering the following questions:
-    - What changes were made to the data?
-    - Are there any legal or regulatory guidelines for your data or project topic?
-    - What risks could be created based on the transformations done?
-    - Did you make any assumptions in cleaning/transforming the data?
-    - How was your data sourced / verified for credibility?
-    - Was your data acquired in an ethical way?
-    - How would you mitigate any of the ethical implications you have identified?
-
-## Milestone 5 - Merging the Data and Storing in a Database/Visualizing Data:
-Now that you have cleaned and transformed your 3 datasets, you need to load them into a database. You can choose what kind of database (SQLLite or MySQL, Postgre SQL are all free options). You will want to load each dataset into SQL Lite as an individual table and then you must join the datasets together with SQL joins into 1 dataset.
-
-Once all the data is merged together in your database, create 5 visualizations that demonstrate the data you have cleansed. You should have at least 2 visualizations that have data from more than one source, using SQL joins (meaning, if you have 3 tables, you must have visualizations that span across 2 of the tables – you are also welcome to use your consolidated dataset that you created in the previous step, if you do that, you have met this requirement).
-
-For the visualization portion of the project, you are welcome to use a python library like Matplotlib, Seaborn, or an R package ggPlot2, Plotly, or Tableau/PowerBI.
-
-PowerBI is a free tool that could be used – Tableau only has a free web author. If you use Tableau/PowerBI you need to submit a PDF with your assignment vs the Tableau/PowerBI file.
-
-Clearly label each visualization. Submit your code for merging and storing in the database, with your code for the visualizations along with a 250-500-word summary of what you learned and had to do to complete the project In your write-up, make sure to address the ethical implications of cleansing data and your project topic. You can submit a Jupyter Notebook or a PDF of your code. If you submit a .py file you need to also include a PDF or attachment of your results.
-
-You must submit the following:
-
-- Jupyter Notebook File or PDF of your code with Milestone # listed.
-- Each step and visualization should be clearly labeled.
-- Human readable dataset after all transformations should be printed at the end of your notebook.
-- 250-500 word summary of what you learned and a summary of the ethical implications answering the following questions:
-    - What changes were made to the data?
-    - Are there any legal or regulatory guidelines for your data or project topic?
-    - What risks could be created based on the transformations done?
-    - Did you make any assumptions in cleaning/transforming the data?
-    - How was your data sourced / verified for credibility?
-    - Was your data acquired in an ethical way?
-    - How would you mitigate any of the ethical implications you have identified?
+- RAWG. (2024). *RAWG Video Games Database API.* https://rawg.io/apidocs
+- Wikipedia. (2024). *List of Game of the Year awards.* https://en.wikipedia.org/wiki/List_of_Game_of_the_Year_awards
