@@ -16,14 +16,14 @@ Data Engineering | Data Wrangling | Multi-Source Integration
 This project combines three distinct source types, related through video game titles:
 
 - **Flat file (CSV):** A Kaggle video game dataset containing sales and metadata
-- **Website (web scraping):** A Wikipedia page listing Game of the Year awards, parsed directly from the HTML using BeautifulSoup
+- **Website (web scraping):** A Wikipedia page listing Game of the Year awards, parsed directly from the saved HTML using BeautifulSoup
 - **API:** The RAWG Video Games API, queried with pagination to retrieve game metadata
 
 ## Methods
 
 ### Data Extraction
 - Loaded flat file data with Pandas
-- Scraped and parsed structured HTML tables from Wikipedia with BeautifulSoup
+- Scraped and parsed structured HTML tables from a saved Wikipedia page with BeautifulSoup
 - Queried the RAWG API across multiple pages and flattened nested JSON responses
 
 ### Data Cleaning & Transformation
@@ -35,7 +35,7 @@ This project combines three distinct source types, related through video game ti
   - Reformatting nested or non-tabular fields into clean columns
 
 ### Data Integration & Storage
-- Loaded each cleaned dataset into a SQLite database as separate tables
+- Loaded each cleaned dataset into a SQLite database as separate tables (kaggle, wiki, api)
 - Joined the tables with SQL into a unified dataset
 - Created visualizations, including charts spanning multiple joined sources
 
@@ -63,9 +63,15 @@ This project combines three distinct source types, related through video game ti
 
 ```text
 video-game-data-pipeline/
-├── video_game_data_pipeline.ipynb     # Main pipeline notebook
-├── (source and cleaned data files)    # CSV / HTML data sources and outputs
-├── final_database.db                  # SQLite database with merged tables
+├── video_game_data_pipeline.ipynb                      # Main pipeline notebook
+├── preprocessed_video_games.csv                        # Flat file source (Kaggle)
+├── List of Game of the Year awards - Wikipedia.html    # Website source (scraped)
+├── rawg_games.csv                                      # API source (RAWG, raw pull)
+├── cleaned_videogames.csv                              # Cleaned flat file data
+├── cleaned_wiki.csv                                    # Cleaned website data
+├── cleaned_api.csv                                     # Cleaned API data
+├── final_database.db                                   # SQLite database with merged tables
+├── .gitignore
 └── README.md
 ```
 
@@ -76,7 +82,7 @@ video-game-data-pipeline/
 3. To re-run the API extraction, obtain a free RAWG API key from https://rawg.io/apidocs and store it locally (see note below)
 4. Open `video_game_data_pipeline.ipynb` in Jupyter and run the cells
 
-> **Note on the API key:** The notebook reads the RAWG API key from a local file outside the repository. The key is never stored in the notebook or committed to GitHub. To reproduce the API steps, supply your own key. The cleaned data files are included so the merge and visualization steps can be run without re-querying the API.
+> **Note on the API key:** The notebook reads the RAWG API key from a local file outside the repository (`api_keys.json`), which is excluded from version control and never committed to GitHub. To reproduce the API steps, supply your own key. The cleaned data files and the SQLite database are included so the merge and visualization steps can be run without re-querying the API.
 
 ## Ethical Considerations
 
